@@ -1,6 +1,4 @@
-### MainStack
-
-Re: Backend Engineer Test
+### GLOQ
 
 ## Prerequisites
 
