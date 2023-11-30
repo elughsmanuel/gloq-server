@@ -59,7 +59,7 @@ When you see...
 [1] - - - - - - - - - -  
 [1] 🌟 🛠️  [SERVER] - Server is listening on http://${host}:${port}  
 
-...server is up and running.
+...server is up and running. 
 
 
 ## API Documentation
