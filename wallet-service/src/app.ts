@@ -6,6 +6,7 @@ import http from "http";
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import bodyParser from 'body-parser';
 import { errorMiddleware } from './middleware/errorMiddleware';
+import userRouter from './wallet/routers/userRouter';
 
 const app = express();
 const host = process.env.HOST || 'localhost';
@@ -38,6 +39,8 @@ app.get('/api/v1', (req, res) => {
         data: `${ReasonPhrases.OK} : API - v1`,
     });
 });
+
+app.use('/api/v1/wallet-users', userRouter);
 
 app.all('*', (req, res) => {
     return res.status(StatusCodes.NOT_FOUND).json({

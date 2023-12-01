@@ -11,8 +11,7 @@ import {
     VALID_EMAIL,
     VALID_PASSWORD,
     MATCHING_PASSWORD,
-
- } from '../../auth/utils/constants';
+} from '../../auth/utils/constants';
 
 export interface IUser extends Document {
     firstName: string;

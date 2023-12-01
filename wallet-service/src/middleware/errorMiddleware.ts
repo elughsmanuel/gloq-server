@@ -10,7 +10,7 @@ import {
     UNIQUE_CONSTRAINT,
     VALIDATION_ERROR,
     VALIDATION_ERROR_CODE,
- } from '../auth/utils/constants';
+ } from '../utils/constants';
 
 export const errorMiddleware = (
     err: any, 
