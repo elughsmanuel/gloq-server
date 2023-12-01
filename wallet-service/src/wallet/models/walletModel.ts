@@ -1,33 +1,46 @@
 import mongoose, {ObjectId, Document, Schema } from 'mongoose';
-import { IUser } from './userModel';
+import validator from 'validator';
+import { 
+    USERNAME_REQUIRED,
+    EMAIL_REQUIRED,
+    VALID_EMAIL,
+} from '../../utils/constants';
 
 export interface IWallet extends Document {
     _id: ObjectId;
-    user: IUser['_id'];
+    username: string;
+    email: string;
     balance: number;
     currency: string;
 }
 
 const walletSchema = new Schema(
     {
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
-            unique: true,
-        },
-        balance: {
-            type: Number,
-            default: 0,
-        },
-        currency: {
-            type: String,
-            default: 'NGN',
-        },
+    username: {
+        type: String,
+        required: [true, USERNAME_REQUIRED],
+        unique: true,
+        lowercase: true,
     },
-    {
-        timestamps: true,
-    }
+    email: {
+        type: String,
+        required: [true, EMAIL_REQUIRED],
+        unique: true,
+        lowercase: true,
+        validate: [validator.isEmail, VALID_EMAIL],
+    },
+    balance: {
+        type: Number,
+        default: 0,
+    },
+    currency: {
+        type: String,
+        default: 'NGN',
+    },
+    },
+  {
+    timestamps: true,
+  }
 );
 
 const Wallet = mongoose.model<IWallet>('Wallet', walletSchema);

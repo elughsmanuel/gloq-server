@@ -9,5 +9,5 @@ export const UNIQUE_CONSTRAINT = "Unique constraint violation";
 export const VALIDATION_ERROR = "MongoServerError";
 export const VALIDATION_ERROR_CODE = 11000;
 
-export const USER_NOT_FOUND = "User not found";
-export const USER_DELETED = "User successfully deleted";
+export const WALLET_NOT_FOUND = "Wallet not found";
+export const WALLET_DELETED = "Wallet successfully deleted";

@@ -7,7 +7,7 @@ import {
     VALID_EMAIL,
 } from '../utils/constants';
 
-export const createUserSchema = Joi.object({
+export const createWalletSchema = Joi.object({
     username: Joi.string().trim().required().messages({
         "any.required": USERNAME_REQUIRED,
         "string.empty": EMPTY_USERNAME,
@@ -21,7 +21,7 @@ export const createUserSchema = Joi.object({
     currency: Joi.string().trim(),
 });
 
-export const updateUserSchema = Joi.object({
+export const updateWalletSchema = Joi.object({
     username: Joi.string().trim(),
     email: Joi.string().trim(),
     balance: Joi.number(),
