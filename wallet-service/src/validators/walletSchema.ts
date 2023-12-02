@@ -18,12 +18,10 @@ export const createWalletSchema = Joi.object({
         "string.email": VALID_EMAIL,
     }),
     balance: Joi.number(),
-    currency: Joi.string().trim(),
 });
 
 export const updateWalletSchema = Joi.object({
     username: Joi.string().trim(),
     email: Joi.string().trim(),
     balance: Joi.number(),
-    currency: Joi.string().trim(),
 });

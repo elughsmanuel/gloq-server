@@ -4,6 +4,7 @@ import {
     USERNAME_REQUIRED,
     EMAIL_REQUIRED,
     VALID_EMAIL,
+    NIGERIAN_NAIRA,
 } from '../../utils/constants';
 
 export interface IWallet extends Document {
@@ -16,27 +17,27 @@ export interface IWallet extends Document {
 
 const walletSchema = new Schema(
     {
-    username: {
-        type: String,
-        required: [true, USERNAME_REQUIRED],
-        unique: true,
-        lowercase: true,
-    },
-    email: {
-        type: String,
-        required: [true, EMAIL_REQUIRED],
-        unique: true,
-        lowercase: true,
-        validate: [validator.isEmail, VALID_EMAIL],
-    },
-    balance: {
-        type: Number,
-        default: 0,
-    },
-    currency: {
-        type: String,
-        default: 'NGN',
-    },
+        username: {
+            type: String,
+            required: [true, USERNAME_REQUIRED],
+            unique: true,
+            lowercase: true,
+        },
+        email: {
+            type: String,
+            required: [true, EMAIL_REQUIRED],
+            unique: true,
+            lowercase: true,
+            validate: [validator.isEmail, VALID_EMAIL],
+        },
+        balance: {
+            type: Number,
+            default: 0,
+        },
+        currency: {
+            type: String,
+            default: NIGERIAN_NAIRA,
+        },
     },
   {
     timestamps: true,
