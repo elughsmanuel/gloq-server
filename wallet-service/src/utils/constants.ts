@@ -21,6 +21,7 @@ export const EMPTY_AMOUNT = "Amount cannot be empty";
 export const DESCRIPTION_REQUIRED = "Description is required";
 export const EMPTY_DESCRIPTION = "Description cannot be empty";
 
+export const INSUFFICIENT_FUNDS = "INSUFFICIENT FUNDS";
 export const NIGERIAN_NAIRA = "NGN";
 export const CREDIT = "credit";
 export const DEBIT = "debit";

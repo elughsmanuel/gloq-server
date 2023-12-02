@@ -34,40 +34,39 @@ export const recordTransaction = async (
     }
 };
 
-// export const getAllWallets = async (
-//     req: Request, 
-//     res: Response,
-//     next: NextFunction,
-// ) => {
-//     try {
-//         const { 
-//             page,
-//             perPage,
-//         } = req.query;
+export const getAllTransactions = async (
+    req: Request, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { walletId } = req.params;
+        const { page, perPage } = req.query;
 
-//         const wallets = await walletService.getAllWallets(
-//             parseFloat(page as string) || '1',
-//             parseFloat(perPage as string || '10'),
-//         );
+        const transactions = await transactionService.getAllTransactions(
+            walletId,
+            parseFloat(page as string) || '1',
+            parseFloat(perPage as string || '10'),
+        );
 
-//         return res.status(StatusCodes.OK).json(wallets);
-//     } catch (error) {
-//         next(error);
-//     }
-// };
+        return res.status(StatusCodes.OK).json(transactions);
+    } catch (error) {
+        next(error);
+    }
+};
 
-// export const getWalletById = async (
-//     req: Request, 
-//     res: Response,
-//     next: NextFunction,
-// ) => {
-//     try {
-//         const { walletId } = req.params;
+export const getTransactionById = async (
+    req: Request, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { transactionId } = req.params;
 
-//         const wallet = await walletService.getWalletById(walletId);
+        const transaction = await transactionService.getTransactionById(transactionId);
 
-//         return res.status(StatusCodes.OK).json(wallet);
-//     } catch (error) {
-//         next(error);
-//     }
-// };
+        return res.status(StatusCodes.OK).json(transaction);
+    } catch (error) {
+        next(error);
+    }
+};

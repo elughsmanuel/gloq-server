@@ -12,24 +12,24 @@ class TransactionRepository {
         return transaction;
     }
 
-    // async getAllWallets(query: any, skip: any, perPage: any): Promise<IWallet[]> {
-    //     let queryBuilder = Wallet.find(query).skip(skip).limit(perPage);
+    async getAllTransactions(walletId: string, skip: any, perPage: any): Promise<ITransaction[]> {
+        let queryBuilder = Transaction.find({walletId}).skip(skip).limit(perPage);
 
-    //     const wallets = await queryBuilder.exec();
+        const transactions = await queryBuilder.exec();
         
-    //     return wallets;
-    // }
+        return transactions;
+    }
 
-    // async getTotalWalletCount(query: any): Promise<number> {
+    async getTotalTransactionCount(query: any): Promise<number> {
 
-    //     return await Wallet.countDocuments(query).exec();
-    // }
+        return await Transaction.countDocuments(query).exec();
+    }
 
-    // async getWalletById(walletId: string): Promise<IWallet | null> {
-    //     const wallet = await Wallet.findById(walletId);
+    async getTransactionById(transactionId: string): Promise<ITransaction | null> {
+        const transaction = await Transaction.findById(transactionId);
 
-    //     return wallet;
-    // }
+        return transaction;
+    }
 }
 
 export default TransactionRepository;

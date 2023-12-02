@@ -3,6 +3,7 @@ import WalletRepository from '../../wallet/repositories/walletRepository';
 import BadRequest from '../../errors/BadRequest';
 import {
     WALLET_NOT_FOUND,
+    INSUFFICIENT_FUNDS,
 } from '../../utils/constants';
 
 class TransactionService {
@@ -34,7 +35,7 @@ class TransactionService {
             if (wallet.balance < amount) {
                 return { 
                     success: true, 
-                    data: 'INSUFFICIENT FUNDS',
+                    data: INSUFFICIENT_FUNDS,
                 }
             }
 
@@ -52,40 +53,37 @@ class TransactionService {
         }
     }
 
-    // async getAllWallets(
-    //     page: any,
-    //     perPage: any,
-    // ) {
+    async getAllTransactions(walletId: string, page: any, perPage: any) {
 
-    //     // Build the query for filtering wallets
-    //     let query;
+        // Build the query for filtering transactions
+        let query;
 
-    //     const count = await this.walletRepository.getTotalWalletCount(query);
+        const count = await this.transactionRepository.getTotalTransactionCount(query);
 
-    //     // Calculate pagination values
-    //     const skip = (page - 1) * perPage;
-    //     const currentPage = Math.ceil(page);
-    //     const totalPages = Math.ceil(count / perPage);
+        // Calculate pagination values
+        const skip = (page - 1) * perPage;
+        const currentPage = Math.ceil(page);
+        const totalPages = Math.ceil(count / perPage);
         
-    //     const wallets = await this.walletRepository.getAllWallets(query, skip, perPage);
+        const transactions = await this.transactionRepository.getAllTransactions(walletId, skip, perPage);
 
-    //     return {
-    //         status: true,
-    //         results: wallets.length,
-    //         data: wallets,
-    //         currentPage: currentPage,
-    //         totalPages: totalPages,
-    //     }
-    // }
+        return {
+            status: true,
+            results: transactions.length,
+            data: transactions,
+            currentPage: currentPage,
+            totalPages: totalPages,
+        }
+    }
 
-    // async getWalletById(walletId: string) {
-    //     const wallet = await this.walletRepository.getWalletById(walletId);
+    async getTransactionById(transactionId: string) {
+        const transaction = await this.transactionRepository.getTransactionById(transactionId);
 
-    //     return {
-    //         status: true,
-    //         data: wallet,
-    //     }
-    // }
+        return {
+            status: true,
+            data: transaction,
+        }
+    }
 }
 
 export default TransactionService;
