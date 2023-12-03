@@ -20,7 +20,6 @@ import {
     generateToken,
 } from '../utils/token';
 
-
 class AuthService {
     private userRepository: UserRepository;
     private emailService: EmailService;
