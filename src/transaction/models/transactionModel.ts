@@ -8,7 +8,7 @@ import {
     CREDIT,
     DEBIT,
     NIGERIAN_NAIRA, 
-} from '../../utils/constants';
+} from '../utils/constants';
 
 export interface ITransaction extends Document {
     wallet: IWallet['_id'];

@@ -5,9 +5,15 @@ import {
     EMAIL_REQUIRED,
     EMPTY_EMAIL,
     VALID_EMAIL,
-} from '../utils/constants';
+    USER_ID_REQUIRED,
+    EMPTY_USER_ID,
+} from '../wallet/utils/constants';
 
 export const createWalletSchema = Joi.object({
+    userId: Joi.string().trim().required().messages({
+        "any.required": USER_ID_REQUIRED,
+        "string.empty": EMPTY_USER_ID,
+    }),
     username: Joi.string().trim().required().messages({
         "any.required": USERNAME_REQUIRED,
         "string.empty": EMPTY_USERNAME,

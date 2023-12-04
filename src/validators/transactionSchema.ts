@@ -8,7 +8,7 @@ import {
     EMPTY_AMOUNT,
     DESCRIPTION_REQUIRED,
     EMPTY_DESCRIPTION,
-} from '../utils/constants';
+} from '../transaction/utils/constants';
 
 export const recordTransactionSchema = Joi.object({
     walletId: Joi.string().required().messages({

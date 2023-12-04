@@ -4,7 +4,7 @@ import BadRequest from '../../errors/BadRequest';
 import {
     WALLET_NOT_FOUND,
     INSUFFICIENT_FUNDS,
-} from '../../utils/constants';
+} from '../utils/constants';
 
 class TransactionService {
     private transactionRepository: TransactionRepository;

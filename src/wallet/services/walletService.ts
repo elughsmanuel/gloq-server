@@ -3,7 +3,7 @@ import BadRequest from '../../errors/BadRequest';
 import {
     WALLET_NOT_FOUND,
     WALLET_DELETED
-} from '../../utils/constants';
+} from '../../wallet/utils/constants';
 
 class WalletService {
     private walletRepository: WalletRepository;

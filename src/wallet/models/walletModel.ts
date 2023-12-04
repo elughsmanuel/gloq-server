@@ -5,7 +5,7 @@ import {
     EMAIL_REQUIRED,
     VALID_EMAIL,
     NIGERIAN_NAIRA,
-} from '../../utils/constants';
+} from '../utils/constants';
 
 export interface IWallet extends Document {
     _id: ObjectId;
@@ -17,11 +17,10 @@ export interface IWallet extends Document {
 
 const walletSchema = new Schema(
     {
-        username: {
+        userId: {
             type: String,
-            required: [true, USERNAME_REQUIRED],
+            required: [true, 'USER_ID_REQUIRED'],
             unique: true,
-            lowercase: true,
         },
         email: {
             type: String,
@@ -30,6 +29,12 @@ const walletSchema = new Schema(
             lowercase: true,
             validate: [validator.isEmail, VALID_EMAIL],
         },
+        username: {
+            type: String,
+            required: [true, USERNAME_REQUIRED],
+            unique: true,
+            lowercase: true,
+        },        
         balance: {
             type: Number,
             default: 0,

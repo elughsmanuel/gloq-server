@@ -8,6 +8,8 @@ import bodyParser from 'body-parser';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import authRouter from './auth/routers/authRouter';
 import userRouter from './user/routers/userRouter';
+import walletRouter from './wallet/routers/walletRouter';
+import transactionRouter from './transaction/routers/transactionRouter';
 
 const app = express();
 const host = process.env.HOST || 'localhost';
@@ -15,7 +17,7 @@ const port = Number(process.env.PORT || 8000);
 const httpServer = http.createServer(app);
 
 const db = String(process.env.DATABASE_CONNECTION).replace(
-    '<PASSWORD>', String(process.env.DATABASE_PASSWORD)
+    '<password>', String(process.env.DATABASE_PASSWORD)
 );
 
 app.use(bodyParser.json());
@@ -43,6 +45,8 @@ app.get('/api/v1', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/wallets', walletRouter);
+app.use('/api/v1/transactions', transactionRouter);
 
 app.all('*', (req, res) => {
     return res.status(StatusCodes.NOT_FOUND).json({
