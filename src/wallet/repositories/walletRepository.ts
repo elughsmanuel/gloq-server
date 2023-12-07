@@ -1,9 +1,9 @@
 import Wallet, { IWallet } from '../models/walletModel';
 
 class WalletRepository {
-    async createWallet(data: any): Promise<IWallet> {
+    async createWallet(userId: string): Promise<IWallet> {
         const wallet = await Wallet.create({
-            ...data,
+            userId: userId,
         });
 
         return wallet;
@@ -22,24 +22,14 @@ class WalletRepository {
         return await Wallet.countDocuments(query).exec();
     }
 
-    async getWalletById(walletId: string): Promise<IWallet | null> {
-        const wallet = await Wallet.findById(walletId);
+    async getWalletById(userId: string): Promise<IWallet | null> {
+        const wallet = await Wallet.findOne({userId});
 
         return wallet;
     }
 
-    async updateWallet(walletId: string, data: any): Promise<IWallet | null> {
-        const updatedWallet = await Wallet.findByIdAndUpdate(
-            walletId,
-            { $set: data },
-            { new: true },
-        );
-
-        return updatedWallet;
-    }
-
-    async findByIdAndDelete(walletId: string): Promise<IWallet | null> {
-        const wallet = await Wallet.findByIdAndDelete(walletId);
+    async findByIdAndDelete(userId: string): Promise<IWallet | null> {
+        const wallet = await Wallet.findOneAndDelete({userId});
 
         return wallet;
     }

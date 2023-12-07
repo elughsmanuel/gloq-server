@@ -1,8 +1,9 @@
 import WalletRepository from '../repositories/walletRepository';
 import BadRequest from '../../errors/BadRequest';
 import {
+    WALLET_EXIST,
     WALLET_NOT_FOUND,
-    WALLET_DELETED
+    WALLET_DELETED,
 } from '../../wallet/utils/constants';
 
 class WalletService {
@@ -12,8 +13,14 @@ class WalletService {
         this.walletRepository = walletRepository;
     }
 
-    async createWallet(data: any) {
-        const wallet = await this.walletRepository.createWallet(data);
+    async createWallet(userId: string) {
+        const walletExist = await this.walletRepository.getWalletById(userId);
+
+        if(walletExist) {
+            throw new BadRequest(WALLET_EXIST);
+        }
+
+        const wallet = await this.walletRepository.createWallet(userId);
 
         return { 
             success: true, 
@@ -47,8 +54,12 @@ class WalletService {
         }
     }
 
-    async getWalletById(walletId: string) {
-        const wallet = await this.walletRepository.getWalletById(walletId);
+    async getWalletById(userId: string) {
+        const wallet = await this.walletRepository.getWalletById(userId);
+
+        if(!wallet) {
+            throw new BadRequest(WALLET_NOT_FOUND);
+        }
 
         return {
             status: true,
@@ -56,29 +67,14 @@ class WalletService {
         }
     }
 
-    async updateWallet(walletId: string, data: any) {
-        const wallet = await this.walletRepository.getWalletById(walletId);
+    async deleteWallet(userId: string) {
+        const wallet = await this.walletRepository.getWalletById(userId);
 
         if(!wallet) {
             throw new BadRequest(WALLET_NOT_FOUND);
         }
 
-        const updatedWallet = await this.walletRepository.updateWallet(walletId, data);
-
-        return {
-            status: true,
-            data: updatedWallet,
-        }
-    }
-
-    async deleteWallet(walletId: string) {
-        const wallet = await this.walletRepository.getWalletById(walletId);
-
-        if(!wallet) {
-            throw new BadRequest(WALLET_NOT_FOUND);
-        }
-
-        await this.walletRepository.findByIdAndDelete(walletId);
+        await this.walletRepository.findByIdAndDelete(userId);
 
         return {
             status: true,

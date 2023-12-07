@@ -1,9 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { 
-    createWalletSchema,
-    updateWalletSchema,
-} from '../../validators/walletSchema';
 import WalletService from '../services/walletService';
 import WalletRepository from '../repositories/walletRepository';
 
@@ -11,15 +7,13 @@ const walletRepository = new WalletRepository();
 const walletService = new WalletService(walletRepository);
 
 export const createWallet = async (
-    req: Request, 
+    req: Request & {userId?: string}, 
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const schema = await createWalletSchema.validateAsync(req.body);
-
         const createWallet = await walletService.createWallet(
-            schema,
+            String(req.userId),
         );
 
         return res.status(StatusCodes.OK).json(createWallet);
@@ -51,34 +45,13 @@ export const getAllWallets = async (
 };
 
 export const getWalletById = async (
-    req: Request, 
+    req: Request & {userId?: string},
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { walletId } = req.params;
-
-        const wallet = await walletService.getWalletById(walletId);
-
-        return res.status(StatusCodes.OK).json(wallet);
-    } catch (error) {
-        next(error);
-    }
-};
-
-export const updateWallet = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-) => {
-    try {
-        const { walletId } = req.params;
-
-        const schema = await updateWalletSchema.validateAsync(req.body);
-
-        const wallet = await walletService.updateWallet(
-            walletId, 
-            schema,
+        const wallet = await walletService.getWalletById(
+            String(req.userId)
         );
 
         return res.status(StatusCodes.OK).json(wallet);
@@ -88,15 +61,13 @@ export const updateWallet = async (
 };
 
 export const deleteWallet = async (
-    req: Request,
+    req: Request & {userId?: string},
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { walletId } = req.params;
-
         const wallet = await walletService.deleteWallet(
-            walletId, 
+            String(req.userId)
         );
 
         return res.status(StatusCodes.OK).json(wallet);

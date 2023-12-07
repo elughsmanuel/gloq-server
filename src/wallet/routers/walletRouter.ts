@@ -3,16 +3,18 @@ import {
     createWallet,
     getAllWallets,
     getWalletById,
-    updateWallet,
     deleteWallet,
 } from '../controllers/walletController';
+import {
+    authenticate,
+    isAdmin,
+} from '../../middleware/authMiddleware';
 
 const walletRouter = express.Router();
 
-walletRouter.post('/create-wallet', createWallet);
-walletRouter.get('/', getAllWallets);
-walletRouter.get('/get-wallet/:walletId', getWalletById);
-walletRouter.patch('/update-wallet/:walletId', updateWallet);
-walletRouter.delete('/delete-wallet/:walletId', deleteWallet);
+walletRouter.post('/create-wallet', authenticate, createWallet);
+walletRouter.get('/', authenticate, isAdmin, getAllWallets);
+walletRouter.get('/get-wallet', authenticate, getWalletById);
+walletRouter.delete('/delete-wallet', authenticate, deleteWallet);
 
 export default walletRouter;
