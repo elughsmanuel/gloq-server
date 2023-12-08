@@ -25,8 +25,13 @@ class TransactionRepository {
         return await Transaction.countDocuments(query).exec();
     }
 
-    async getTransactionById(transactionId: string): Promise<ITransaction | null> {
-        const transaction = await Transaction.findById(transactionId);
+    async getTransactionById(walletId: string, transactionId: string): Promise<ITransaction | null> {
+        const transaction = await Transaction.findOne(
+            {
+                walletId: walletId,
+                _id: transactionId,
+            }
+        );
 
         return transaction;
     }

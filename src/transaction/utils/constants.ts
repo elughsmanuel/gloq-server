@@ -8,6 +8,8 @@ export const DESCRIPTION_REQUIRED = "Description is required";
 export const EMPTY_DESCRIPTION = "Description cannot be empty";
 
 export const WALLET_NOT_FOUND = "Wallet not found";
+export const USER_NOT_FOUND = "User not found";
+export const TRANSACTION_NOT_FOUND = "Transaction not found";
 
 export const INSUFFICIENT_FUNDS = "INSUFFICIENT FUNDS";
 export const NIGERIAN_NAIRA = "NGN";

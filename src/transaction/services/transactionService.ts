@@ -5,6 +5,8 @@ import BadRequest from '../../errors/BadRequest';
 import {
     WALLET_NOT_FOUND,
     INSUFFICIENT_FUNDS,
+    USER_NOT_FOUND,
+    TRANSACTION_NOT_FOUND,
 } from '../utils/constants';
 
 class TransactionService {
@@ -26,7 +28,7 @@ class TransactionService {
         const user = await this.userRepository.getUserById(userId);
 
         if(!user) {
-            throw new BadRequest('USER_NOT_FOUND');
+            throw new BadRequest(USER_NOT_FOUND);
         }
 
         const wallet = await this.walletRepository.getWalletByUserId(userId);
@@ -65,7 +67,18 @@ class TransactionService {
         }
     }
 
-    async getAllTransactions(walletId: string, page: any, perPage: any) {
+    async getAllTransactions(userId: string, page: any, perPage: any) {
+        const user = await this.userRepository.getUserById(userId);
+
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const wallet = await this.walletRepository.getWalletByUserId(userId);
+
+        if (!wallet) {
+            throw new BadRequest(WALLET_NOT_FOUND);
+        }
 
         // Build the query for filtering transactions
         let query;
@@ -76,6 +89,8 @@ class TransactionService {
         const skip = (page - 1) * perPage;
         const currentPage = Math.ceil(page);
         const totalPages = Math.ceil(count / perPage);
+
+        const walletId = wallet._id.toString();
         
         const transactions = await this.transactionRepository.getAllTransactions(walletId, skip, perPage);
 
@@ -88,8 +103,26 @@ class TransactionService {
         }
     }
 
-    async getTransactionById(transactionId: string) {
-        const transaction = await this.transactionRepository.getTransactionById(transactionId);
+    async getTransactionById(userId: string, transactionId: string) {
+        const user = await this.userRepository.getUserById(userId);
+
+        if(!user) {
+            throw new BadRequest(USER_NOT_FOUND);
+        }
+
+        const wallet = await this.walletRepository.getWalletByUserId(userId);
+
+        if (!wallet) {
+            throw new BadRequest(WALLET_NOT_FOUND);
+        }
+
+        const walletId = wallet._id.toString();
+
+        const transaction = await this.transactionRepository.getTransactionById(walletId, transactionId);
+
+        if(!transaction) {
+            throw new BadRequest(TRANSACTION_NOT_FOUND);
+        }
 
         return {
             status: true,

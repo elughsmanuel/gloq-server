@@ -1,5 +1,4 @@
 import mongoose, {ObjectId, Document, Schema } from 'mongoose';
-import validator from 'validator';
 import { 
     NIGERIAN_NAIRA,
 } from '../utils/constants';

@@ -39,16 +39,15 @@ export const recordTransaction = async (
 };
 
 export const getAllTransactions = async (
-    req: Request, 
+    req: Request & {userId?: string}, 
     res: Response,
     next: NextFunction,
 ) => {
     try {
-        const { walletId } = req.params;
         const { page, perPage } = req.query;
 
         const transactions = await transactionService.getAllTransactions(
-            walletId,
+            String(req.userId),
             parseFloat(page as string) || '1',
             parseFloat(perPage as string || '10'),
         );
@@ -60,14 +59,17 @@ export const getAllTransactions = async (
 };
 
 export const getTransactionById = async (
-    req: Request, 
+    req: Request & {userId?: string}, 
     res: Response,
     next: NextFunction,
 ) => {
     try {
         const { transactionId } = req.params;
 
-        const transaction = await transactionService.getTransactionById(transactionId);
+        const transaction = await transactionService.getTransactionById(
+            String(req.userId),
+            transactionId,
+        );
 
         return res.status(StatusCodes.OK).json(transaction);
     } catch (error) {

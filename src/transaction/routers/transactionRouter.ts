@@ -12,7 +12,7 @@ import {
 const transactionRouter = express.Router();
 
 transactionRouter.post('/record-transaction', authenticate, recordTransaction);
-transactionRouter.get('/get-all-transactions/:walletId', getAllTransactions);
-transactionRouter.get('/get-transaction/:transactionId', getTransactionById);
+transactionRouter.get('/get-all-transactions', authenticate, getAllTransactions);
+transactionRouter.get('/get-transaction/:transactionId', authenticate, getTransactionById);
 
 export default transactionRouter;
