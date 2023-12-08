@@ -22,8 +22,14 @@ class WalletRepository {
         return await Wallet.countDocuments(query).exec();
     }
 
-    async getWalletById(userId: string): Promise<IWallet | null> {
+    async getWalletByUserId(userId: string): Promise<IWallet | null> {
         const wallet = await Wallet.findOne({userId});
+
+        return wallet;
+    }
+
+    async getWalletById(walletId: string): Promise<IWallet | null> {
+        const wallet = await Wallet.findById(walletId);
 
         return wallet;
     }

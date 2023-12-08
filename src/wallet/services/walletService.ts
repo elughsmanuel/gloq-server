@@ -14,7 +14,7 @@ class WalletService {
     }
 
     async createWallet(userId: string) {
-        const walletExist = await this.walletRepository.getWalletById(userId);
+        const walletExist = await this.walletRepository.getWalletByUserId(userId);
 
         if(walletExist) {
             throw new BadRequest(WALLET_EXIST);

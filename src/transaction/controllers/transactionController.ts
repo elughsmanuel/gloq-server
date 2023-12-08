@@ -4,16 +4,20 @@ import { recordTransactionSchema } from '../../validators/transactionSchema';
 import TransactionService from '../services/transactionService';
 import TransactionRepository from '../repositories/transactionRepository';
 import WalletRepository from '../../wallet/repositories/walletRepository';
+import UserRepository from '../../user/repositories/userRepository';
 
 const transactionRepository = new TransactionRepository();
 const walletRepository = new WalletRepository();
+const userRepository = new UserRepository();
+
 const transactionService = new TransactionService(
     transactionRepository,
     walletRepository,
+    userRepository,
 );
 
 export const recordTransaction = async (
-    req: Request, 
+    req: Request & {userId?: string}, 
     res: Response,
     next: NextFunction,
 ) => {
@@ -22,7 +26,7 @@ export const recordTransaction = async (
         const schema = await recordTransactionSchema.validateAsync(req.body);
 
         const recordTransaction = await transactionService.recordTransaction(
-            schema.walletId,
+            String(req.userId),
             schema.type,
             schema.amount,
             schema.description,

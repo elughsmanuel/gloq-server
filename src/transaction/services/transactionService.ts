@@ -1,5 +1,6 @@
 import TransactionRepository from '../repositories/transactionRepository';
 import WalletRepository from '../../wallet/repositories/walletRepository';
+import UserRepository from '../../user/repositories/userRepository';
 import BadRequest from '../../errors/BadRequest';
 import {
     WALLET_NOT_FOUND,
@@ -9,23 +10,30 @@ import {
 class TransactionService {
     private transactionRepository: TransactionRepository;
     private walletRepository: WalletRepository;
+    private userRepository: UserRepository;
 
     constructor(
         transactionRepository: TransactionRepository,
         walletRepository: WalletRepository,
+        userRepository: UserRepository,
     ) {
         this.transactionRepository = transactionRepository;
         this.walletRepository = walletRepository;
+        this.userRepository = userRepository;
     }
 
-    async recordTransaction(walletId: string, type: string, amount: number, description: string) {
-        const wallet = await this.walletRepository.getWalletById(walletId);
+    async recordTransaction(userId: string, type: string, amount: number, description: string) {
+        const user = await this.userRepository.getUserById(userId);
+
+        if(!user) {
+            throw new BadRequest('USER_NOT_FOUND');
+        }
+
+        const wallet = await this.walletRepository.getWalletByUserId(userId);
 
         if (!wallet) {
             throw new BadRequest(WALLET_NOT_FOUND);
         }
-
-        const transaction = await this.transactionRepository.recordTransaction(walletId, type, amount, description);
 
         if(type === 'credit') {
             wallet.balance += amount;
@@ -43,6 +51,10 @@ class TransactionService {
         }
 
         await wallet.save();
+
+        const walletId = wallet._id.toString();
+
+        const transaction = await this.transactionRepository.recordTransaction(walletId, type, amount, description);
 
         return { 
             success: true, 
