@@ -1,6 +1,7 @@
 import express from 'express';
 import { 
-    stockMeta
+    stockMeta,
+    searchStock,
 } from '../controllers/stockController';
 import {
     authenticate,
@@ -8,6 +9,7 @@ import {
 
 const stockRouter = express.Router();
 
+stockRouter.get('/search/:search', authenticate, searchStock);
 stockRouter.get('/meta/:ticker', authenticate, stockMeta);
 
 export default stockRouter;
