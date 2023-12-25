@@ -45,3 +45,24 @@ export const stockMeta = async (
         next(error);
     }
 };
+
+export const dailyStock = async (
+    req: Request, 
+    res: Response,
+    next: NextFunction,
+) => {
+    try {
+        const { ticker } = req.params;
+
+        const stock = await apiTiingo.dailyStock(
+            String(ticker)
+        );
+
+        return res.status(StatusCodes.OK).json({
+            success: true,
+            data: stock,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

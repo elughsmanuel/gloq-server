@@ -1,11 +1,12 @@
 import { apiTiingoRequest } from "../requests";
+import BadRequest from '../../errors/BadRequest';
 
 class ApiTiingo {
     async searchStock(search: string) {
         try {
-            const stock = await apiTiingoRequest.get(`/utilities/search/${search}`);
+            const response = await apiTiingoRequest.get(`/utilities/search/${search}`);
 
-            return stock.data;
+            return response.data;
         } catch (error) {
             return error;
         }
@@ -13,9 +14,19 @@ class ApiTiingo {
 
     async stockMeta(ticker: string) {
         try {
-            const meta = await apiTiingoRequest.get(`/daily/${ticker}`);
+            const response = await apiTiingoRequest.get(`/daily/${ticker}`);
 
-            return meta.data;
+            return response.data;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async dailyStock(ticker: string) {
+        try {
+            const response = await apiTiingoRequest.get(`/daily/${ticker}/prices`);
+
+            return response.data;
         } catch (error) {
             return error;
         }
