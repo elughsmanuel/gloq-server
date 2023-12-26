@@ -58,10 +58,7 @@ export const dailyStock = async (
             String(ticker)
         );
 
-        return res.status(StatusCodes.OK).json({
-            success: true,
-            data: stock,
-        });
+        return res.status(StatusCodes.OK).json(stock);
     } catch (error) {
         next(error);
     }
