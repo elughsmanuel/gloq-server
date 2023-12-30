@@ -3,7 +3,7 @@
 
 ## Overview
 
-This project hosts the server-side implementation of a financial platform, offering powerful features for seamless management of stock data, wallet creation, and transaction processing.
+This project is the server-side implementation of a financial platform, offering powerful features for seamless management of stock data, wallet creation, and transaction processing.
 
 ## Features
 
