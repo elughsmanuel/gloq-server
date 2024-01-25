@@ -20,7 +20,7 @@ For detailed API documentation, you can refer to the [Postman Documentation.](ht
 
 Express.js - Web Framework  
 Typescript - Programming language  
-MongoDB/Mongoose - Database
+MongoDB/Mongoose - Database  
 API - Tiingo
 
 ## Prerequisites
