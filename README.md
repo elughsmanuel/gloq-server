@@ -29,7 +29,7 @@ Node.js version 16.x.x or higher
 
 ## Installation
 
-1. Clone the repository and navigate to the project directory
+1. Clone the repository and navigate to the project directory.
 
 2. Run the following command to clone:
 
